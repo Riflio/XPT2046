@@ -1,0 +1,13 @@
+{
+  "name": "XPT2046A_TouchController",
+  "keywords": "display, tft, lcd, graphics, spi, touchscreen, touch, xpt2046",
+  "description": "Touchscreens using the XPT2046 controller.",
+  "exclude": "doc",
+  "repository":
+  {
+    "type": "git",
+    "url": ""
+  },
+  "frameworks": "arduino",
+  "platforms": "*"
+}
