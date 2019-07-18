@@ -2,25 +2,21 @@
 #include <XPT2046A_calib.h>
 
 
-TXPT2046A_Touch touch;  // MOSI=11, MISO=12, SCK=13
-
+XPT2046A touch;  //-- SPI on Arduino UNO: MOSI=11, MISO=12, SCK=13
 
 void setup() {
   Serial.begin(38400);
   while (!Serial && (millis() <= 1000));
 
   //-- Set params
-  touch.rotation = TXPT2046A_Rotations::R0;
-  touch.tftWidth = 1024;
-  touch.tftHeight = 768;
-  touch.pinCS = 8;
-
+  touch.setParams(1024, 768, XPT2046A::Rotations::R0, 8);
+  
   //-- Begin
-  XPT2046A_Begin(touch);
+  touch.begin();
   
   //-- Make calibration
-  Point calDisplayPoints[3] = {Point(5,8), Point(950, 20), Point(512, 700)};
-  Point calTouchPoints[3] = {Point(280, 370), Point(3750, 570), Point(2121, 3791)};  
+  XPT2046A::Point calDisplayPoints[3] = {XPT2046A::Point(5,8), XPT2046A::Point(950, 20), XPT2046A::Point(512, 700)};
+  XPT2046A::Point calTouchPoints[3] = {XPT2046A::Point(280, 370), XPT2046A::Point(3750, 570), XPT2046A::Point(2121, 3791)};  
   XPT2046A_MakeCalibrationParams(calDisplayPoints, calTouchPoints, touch.calParams);
 
   Serial.println("Cal params: ");
@@ -37,15 +33,15 @@ void setup() {
 
 void loop() {
 
-    XPT2046A_Update(touch);
+    XPT2046A::TouchInfo info = touch.update();
     
-    if ( touch.isTouching ) {
+    if ( info.isTouching ) {
       Serial.print("Pressure: ");
-      Serial.print(touch.point.z);
+      Serial.print(info.point.z);
       Serial.print(", x: ");
-      Serial.print(touch.point.x);
+      Serial.print(info.point.x);
       Serial.print(", y: ");
-      Serial.print(touch.point.y);
+      Serial.print(info.point.y);
       Serial.println();
     }
 

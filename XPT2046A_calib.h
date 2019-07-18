@@ -16,7 +16,7 @@ http://www.embedded.com/design/system-integration/4023968/How-To-Calibrate-Touch
 * @param tp - Touch points (raw)
 * @param cal - Result calibration
 */
-bool XPT2046A_MakeCalibrationParams(Point * dp, Point * tp, TXPT2046A_CalParams & cal)
+bool XPT2046A_MakeCalibrationParams(XPT2046A::Point * dp, XPT2046A::Point * tp, XPT2046A::CalibrationParams & cal)
 {
 	cal.V = 	((tp[0].x - tp[2].x) * (tp[1].y - tp[2].y)) - 
 				((tp[1].x - tp[2].x) * (tp[0].y - tp[2].y));
